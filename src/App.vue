@@ -5,7 +5,7 @@
       @mouseover="changeCursorType('hover')"
       @mouseleave="changeCursorType('default')"
     >Hover</div>
-    <CustomCursor ref="cursor" :initEase="0.2">
+    <CustomCursor ref="cursor" :ease="0.2">
       <div class="defaultCursor" :class="{ 'is-active': this.cursorType === 'default' }"></div>
       <div class="hoverCursor" :class="{ 'is-active': this.cursorType === 'hover' }"></div>
     </CustomCursor>
@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import CustomCursor from '@/components/CustomCursor'
+import Tweakpane from 'tweakpane'
+import CustomCursor from './index'
 
 export default {
   name: 'App',
@@ -31,9 +32,23 @@ export default {
   methods: {
     changeCursorType(type) {
       this.cursorType = type
-      console.log(this.cursorType)
     }
   },
+
+  mounted() {
+    this.debugPane = new Tweakpane()
+    this.cursorPane = this.debugPane.addFolder({ title: 'Cursor' })
+
+    this.cursorPane.addInput(this.$refs.cursor, 'ease', {
+      min: 0,
+      max: 1,
+      step: 0.01,
+    })
+  },
+
+  destroyed() {
+    this.debugPane.dispose();
+  }
 }
 </script>
 

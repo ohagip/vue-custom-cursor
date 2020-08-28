@@ -11,7 +11,7 @@
     name: 'CustomCursor',
 
     props: {
-      initEase: {
+      ease: {
         type: Number,
         default: 0.2,
       },
@@ -19,7 +19,6 @@
 
     data() {
       return {
-        ease: this.initEase,
         mousePosition: {
           x: 0,
           y: 0,
