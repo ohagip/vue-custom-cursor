@@ -1,28 +1,108 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div
+      class="hoverBtn"
+      @mouseover="changeCursorType('hover')"
+      @mouseleave="changeCursorType('default')"
+    >Hover</div>
+    <CustomCursor ref="cursor" :initEase="0.2">
+      <div class="defaultCursor" :class="{ 'is-active': this.cursorType === 'default' }"></div>
+      <div class="hoverCursor" :class="{ 'is-active': this.cursorType === 'hover' }"></div>
+    </CustomCursor>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CustomCursor from '@/components/CustomCursor'
 
 export default {
   name: 'App',
+
   components: {
-    HelloWorld
-  }
+    CustomCursor
+  },
+
+  data() {
+    return {
+      cursorType: 'default',
+    }
+  },
+
+  methods: {
+    changeCursorType(type) {
+      this.cursorType = type
+      console.log(this.cursorType)
+    }
+  },
 }
 </script>
 
 <style lang="scss">
+body {
+  margin: 0;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+.hoverBtn {
+  position: relative;
+  padding: 4px;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+  }
+}
+
+.defaultCursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity .2s cubic-bezier(.445, .05, .55, .95);
+}
+.defaultCursor.is-active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.hoverCursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.5);
+  transform: translate(-50%, -50%) scale(0.4);
+  opacity: 0;
+  transition:
+    opacity .2s cubic-bezier(.445, .05, .55, .95),
+    transform .3s cubic-bezier(.15, 1.15, .75, 1.15);
+}
+.hoverCursor.is-active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 </style>
