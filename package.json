@@ -2,19 +2,29 @@
   "name": "vue-custom-cursor",
   "version": "0.1.0",
   "private": true,
-  "main": "./src/components/CustomCursor.vue",
+  "main": "dist/custom-cursor.umd.js",
+  "module": "dist/custom-cursor.esm.js",
+  "unpkg": "dist/custom-cursor.min.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build:npm": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/custom-cursor.umd.js",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/custom-cursor.esm.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/custom-cursor.min.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-commonjs": "^15.0.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "node-sass": "^4.12.0",
+    "rollup": "^2.26.6",
+    "rollup-plugin-vue": "^5.1.9",
     "sass-loader": "^8.0.2",
     "tweakpane": "^1.5.3",
     "vue-template-compiler": "^2.6.11"

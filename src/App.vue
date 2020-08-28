@@ -14,7 +14,7 @@
 
 <script>
 import Tweakpane from 'tweakpane'
-import CustomCursor from './components/CustomCursor'
+import CustomCursor from './CustomCursor'
 
 export default {
   name: 'App',
